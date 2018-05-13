@@ -73,7 +73,7 @@ public class TableroServiceImpl implements TableroService {
 		System.out.print("El número de pozos máximos para que la partida sea entrenida debe ser menor o igual a: "+maxPozos);
 		System.out.print("\nIngresa el número de pozos: ");
 		String pozos= scanner.nextLine();
-		while(!Utils.isNumeric(pozos ) || Integer.parseInt(pozos) > maxPozos){
+		while(!Utils.isNumeric(pozos ) || Integer.parseInt(pozos) > maxPozos || Integer.parseInt(pozos)<0){
 			System.out.print(Constants.ERROR_NUMERICO);
 			System.out.print("Ingresa el número de pozos: ");
 			pozos = scanner.nextLine();
@@ -220,12 +220,20 @@ public class TableroServiceImpl implements TableroService {
 		Scanner scanner = new Scanner(System.in);
 		PersonaDTO persona = new PersonaDTO();
 		persona.setOrientacion(Constants.ORIENTACION_NORTE);
-		persona.setNumFechas(3);
 		persona.setPosX(tablero.getDimensionX()-1);
 		persona.setPosY(1);
 		persona.setTieneTesoro(false);
 		persona.setEstaVivo(true);
 		persona.setPuedoSalir(false);
+		
+		System.out.print("\nIngresa el número de fechas: ");
+		String numFlechas = scanner.nextLine();
+		while(!Utils.isNumeric(numFlechas) || Integer.parseInt(numFlechas)<0){
+			System.out.print(Constants.ERROR_NUMERICO);
+			System.out.print("\nIngresa el número de fechas: ");
+			numFlechas = scanner.nextLine();
+		}
+		persona.setNumFechas(Integer.parseInt(numFlechas));
 		
 	  	System.out.print(infoCasilla(casillaImpl.obtenerCasilla(tablero.getListaCasillas(),persona.getPosX(),persona.getPosY())));
 		System.out.print("Usted está orientado hacia el Norte.\n");
